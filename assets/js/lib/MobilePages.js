@@ -81,8 +81,10 @@
         var pageObject = getPageByName(name);
         if(pageObject && pageObject.init) {
             pageObject.init();
-            return pageObject;
         }
+        var afterLoadEvent = new CustomEvent('mp.pageloaded');
+        document.dispatchEvent(afterLoadEvent);
+        return pageObject;
     }
 
     function addPropertyToPage(object, propertyName, property) {
