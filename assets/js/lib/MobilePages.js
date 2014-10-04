@@ -24,6 +24,7 @@
 
     function changeByHash(e) {
         if(!pageChanging) {
+            triggerEvent('mp.beforeload');
             pageChanging = true;
             var pageSelector = location.hash.slice(1, location.hash.length);
             if(pageSelector) {
@@ -82,8 +83,7 @@
         if(pageObject && pageObject.init) {
             pageObject.init();
         }
-        var afterLoadEvent = new CustomEvent('mp.pageloaded');
-        document.dispatchEvent(afterLoadEvent);
+        triggerEvent('mp.pageloaded');
         return pageObject;
     }
 
@@ -120,6 +120,11 @@
         unregisterAll : unregisterAll,
         init : changeByHash
     };
+
+    function triggerEvent(eventName) {
+        var customEvent = new CustomEvent(eventName);
+        document.dispatchEvent(customEvent);
+    }
 
     function ajax(options) {
         var request = new XMLHttpRequest();
