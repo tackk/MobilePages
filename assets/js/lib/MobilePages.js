@@ -124,7 +124,7 @@
     function triggerEvent(eventName) {
         // CustomEvent polyfill from:
         // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent#Polyfill
-        if(!window.CustomEvent) {
+        if(! CustomEvent) {
             var CustomEvent;
 
             CustomEvent = function(event, params) {
