@@ -1,4 +1,4 @@
 MobilePages
 ===========
 
-A page switching framework for you Phonegap app
+A page switching framework for your Phonegap app
