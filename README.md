@@ -121,3 +121,15 @@ MobilePages.page('home').unregister(); // the page can no longer be referenced.
 ### template
 
 A `string` used to cache the html of the template page to keep from having to get the page every time you want to go to it.
+
+## Events
+
+MobilePages triggers two events; `mp.beforeload` and `mp.pageloaded`.
+
+### mp.beforeload
+
+Triggered before the new page is rendered.
+
+### mp.pageloaded
+
+Triggered after the template is rendered and the page's init function is called.
