@@ -91,6 +91,10 @@
         object[propertyName] = property;
     }
 
+    function isPageNameRegistered(name) {
+        return (!! getPageByName(name));
+    }
+
     function newPage(name) {
         var page;
         if (!name || ''.prototype !== name.prototype) {
@@ -115,6 +119,7 @@
         return page;
     }
     window.MobilePages = {
+        isPage : isPageNameRegistered,
         page : newPage,
         unregister : unregisterPage,
         unregisterAll : unregisterAll,
