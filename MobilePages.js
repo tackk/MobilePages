@@ -139,7 +139,7 @@
                     cancelable: false,
                     detail: undefined
                 };
-                evt = document.createEvent("CustomEvent");
+                evt = document.createEvent('CustomEvent');
                 evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
                 return evt;
             };
