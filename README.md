@@ -8,7 +8,7 @@ A page switching framework for your Phonegap app. MobilePages is intended to hel
 - Download and include the file in your `index.html`.
 - Add a `div` with an id of "pages" in your html file.
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -43,7 +43,7 @@ Dependencies: none.
 
 MobilePages has a very simple api. You can add code to the page object held in the framework and that code will run when the page is loaded. First, you will need to create the page object itself. To do this, simply call the `page` method:
 
-```
+```js
 MobilePages.page('mypage');
 ```
 
@@ -81,7 +81,9 @@ MobilePages.page('home').go(); //the framework will load the 'home' template and
 #### addProperty(string[, object|function|array|primitive])
 
 Parameters: name, optional property (`undefined` if not present)
-Action: Define a property on teh page object by the given name
+
+Action: Define a property on the page object by the given name
+
 Return: The page object. Enables method chaining.
 
 Example usage:
@@ -109,6 +111,7 @@ MobilePages.page('home')
 #### unregister()
 
 Action: Removes the page object from the framework.
+
 Return: None
 
 The object will no longer be referenced by the framework. This can be useful if you want to allow the GC to clean up the object in case you don't need it anymore.
