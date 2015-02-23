@@ -80,9 +80,14 @@
     function loadPage(name) {
         var pageObject = getPageByName(name);
         if(pageObject && pageObject.init) {
-            pageObject.init();
+            setTimeout(function() {
+                pageObject.init();
+                triggerEvent('mp.pageloaded');
+            }, 0);
+        } else {
+            triggerEvent('mp.pageloaded');
         }
-        triggerEvent('mp.pageloaded');
+
         return pageObject;
     }
 
