@@ -1,20 +1,21 @@
 (function MobilePages(window) {
     'use strict';
-    var pageChanging = false;
-    var currentPage = '';
+    var pageChanging = false,
+        currentPage = '',
+        pages = {};
     window.addEventListener('hashchange', changeByHash);
 
     var MobilePage = {
-        unregister : function unregister() {
+        unregister: function unregister() {
             unregisterPage(this);
         },
-        addProperty : function addProperty(propertyName, property) {
+        addProperty: function addProperty(propertyName, property) {
             addPropertyToPage(this, propertyName, property);
             return this;
         },
-        go : function go() {
-            if(location.hash === '#'+this.name) {
-                changeByHash()
+        go: function go() {
+            if(location.hash === '#' + this.name) {
+                changeByHash();
             } else {
                 location.hash = this.name;
             }
@@ -22,7 +23,7 @@
         }
     };
 
-    function changeByHash(e) {
+    function changeByHash() {
         if(!pageChanging) {
             triggerEvent('mp.beforeload');
             pageChanging = true;
@@ -44,12 +45,12 @@
 
         function getPage(pageToGet, callback) {
             if (getPageByName(pageToGet) && getPageByName(pageToGet).template) {
-                callback(getPageByName(pageToGet).template)
+                callback(getPageByName(pageToGet).template);
             } else {
                 ajax({
-                    type:'GET',
-                    url:'pages/'+pageToGet+'.html',
-                    success:function(pageData) {
+                    type: 'GET',
+                    url: 'pages/' + pageToGet + '.html',
+                    success: function(pageData) {
                         if(getPageByName(pageToGet)) {
                             getPageByName(pageToGet).template = pageData;
                         } else {
@@ -72,8 +73,6 @@
         pages = {};
     }
 
-    var pages = {};
-
     function getPageByName(name) {
         return pages[name];
     }
@@ -92,7 +91,7 @@
     }
 
     function isPageNameRegistered(name) {
-        return (!! getPageByName(name));
+        return (!!getPageByName(name));
     }
 
     function newPage(name) {
@@ -102,9 +101,9 @@
         } else if(getPageByName(name)) {
             page = getPageByName(name);
         } else {
-            var newPage = Object.create(MobilePage);
-            newPage.name = name;
-            page = register(newPage);
+            var newPageObject = Object.create(MobilePage);
+            newPageObject.name = name;
+            page = register(newPageObject);
         }
 
         function register(pageObject) {
@@ -119,17 +118,17 @@
         return page;
     }
     window.MobilePages = {
-        isPage : isPageNameRegistered,
-        page : newPage,
-        unregister : unregisterPage,
-        unregisterAll : unregisterAll,
-        init : changeByHash
+        isPage: isPageNameRegistered,
+        page: newPage,
+        unregister: unregisterPage,
+        unregisterAll: unregisterAll,
+        init: changeByHash
     };
 
     function triggerEvent(eventName) {
         // CustomEvent polyfill from:
         // https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent#Polyfill
-        if(! CustomEvent) {
+        if(!window.CustomEvent) {
             var CustomEvent;
 
             CustomEvent = function(event, params) {
@@ -148,7 +147,7 @@
 
             window.CustomEvent = CustomEvent;
         }
-        var customEvent = new CustomEvent(eventName);
+        var customEvent = new window.CustomEvent(eventName);
         document.dispatchEvent(customEvent);
     }
 
@@ -157,7 +156,7 @@
         request.open(options.type, options.url);
         request.send();
 
-        request.onreadystatechange = function(event) {
+        request.onreadystatechange = function() {
             try {
                 switch (request.readyState) {
                     case 0:
