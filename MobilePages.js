@@ -38,9 +38,13 @@
         }
 
         function changePage(pageData) {
-            findOne('#pages').innerHTML = pageData;
-            loadPage(pageSelector);
-            pageChanging = false;
+            var pageNode = findOne('#pages');
+            pageNode.innerHTML = '';
+            setTimeout(function() {
+                pageNode.innerHTML = pageData;
+                loadPage(pageSelector);
+                pageChanging = false;
+            }, 0);
         }
 
         function getPage(pageToGet, callback) {
