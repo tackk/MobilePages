@@ -4,6 +4,9 @@
         currentPage = '',
         pages = {};
     window.addEventListener('hashchange', changeByHash);
+    document.addEventListener('mp.pageloaded', function() {
+        pageChanging = false;
+    });
 
     var MobilePage = {
         unregister: function unregister() {
@@ -40,11 +43,8 @@
         function changePage(pageData) {
             var pageNode = findOne('#pages');
             pageNode.innerHTML = '';
-            setTimeout(function() {
-                pageNode.innerHTML = pageData;
-                loadPage(pageSelector);
-                pageChanging = false;
-            }, 0);
+            pageNode.innerHTML = pageData;
+            loadPage(pageSelector);
         }
 
         function getPage(pageToGet, callback) {
@@ -84,7 +84,7 @@
     function loadPage(name) {
         var pageObject = getPageByName(name);
         if(pageObject && pageObject.init) {
-            setTimeout(function() {
+            requestAnimationFrame(function() {
                 pageObject.init();
                 triggerEvent('mp.pageloaded');
             }, 0);
